@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+tempCodeRunnerFile.py
+
+# 模型与大文件（超过 GitHub 限制，不入库）
+*.pkl
+*.joblib
+
+# 公开数据集（代码中可自行下载）
+cifar-10-batches-py/
+*.tar.gz
+*.zip
+
+# 系统/编辑器
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
