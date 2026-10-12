@@ -1,7 +1,10 @@
 
 
 ### 公式：
-$ \begin{align*}
+
+$$
+
+\begin{align*}
 d &= \frac{|F|}{\|w\|_2} \\
 \boldsymbol{r}_i &= \frac{|f'_l|}{\|w_l\|_2^2} \boldsymbol{w}_l \\
 F_k(\boldsymbol{x}) &= f_k(\boldsymbol{x}) - f_{\hat{k}_0}(\boldsymbol{x}) \\
@@ -9,7 +12,8 @@ F_k(\boldsymbol{x}) &= f_k(\boldsymbol{x}) - f_{\hat{k}_0}(\boldsymbol{x}) \\
 \hat{l}&=\arg\min_{k\neq \hat{k}_0}\frac{|F_k(\boldsymbol{x}_i)|}{\|\boldsymbol{w}_k\|_2} \\
 \boldsymbol{x}_{\text{adv}} &= \boldsymbol{x}_0 + (1+\epsilon)\sum_{i} \boldsymbol{r}_i
 \end{align*}
- $
+
+$$
 
 #### 对公式的理解：
 每次迭代计算最小扰动ri,ri通过公式：点xi到决策边界的距离乘以边界法向量得出，最终对抗样本由ri进行累加得出

@@ -2,17 +2,21 @@
 <font style="color:rgb(0,0,0);">PGD-AT通过寻找当前可训练参数θ时，使交叉熵损失函数值最大的对抗样本( 先假设每个样本都被攻击者改成了最容易分错的样子（内层 max）  )，通过梯度下降更新可训练参数θ（也就是让可训练参数θ向对抗样本的交叉熵损失函数值下降方向走），按照该种步骤不断迭代</font>
 
 #### <font style="color:rgb(0,0,0);">核心公式：</font>
-$ \min_{\theta}\rho(\theta),\quad
+
+$$
+
+\min_{\theta}\rho(\theta),\quad
 \rho(\theta) = \mathbb{E}_{(x,y)\sim \mathcal{D}}
 \left[
 \underbrace{\max_{\delta\in S}}_{\text{攻击者：找最坏扰动}}
 \underbrace{L(\theta, x+\delta, y)}_{\text{分类损失（交叉熵）}}
 \right]
- $
+
+$$
 
 ### Madry论文的实验结论：
 #### 一、白盒鲁棒准确率（核心结果）
-##### **MNIST**（$ \varepsilon=0.3 $，像素尺度 0–1）
+##### **MNIST**（$\varepsilon=0.3$，像素尺度 0–1）
 | 攻击 | 配置 | 准确率 |
 | --- | --- | --- |
 | 自然样本 | — | 98.8% |
@@ -22,7 +26,7 @@ $ \min_{\theta}\rho(\theta),\quad
 | CW（L2） | 40 步 | 94.0% |
 
 
-##### **CIFAR-10**（$ \varepsilon=8/255 $）
+##### **CIFAR-10**（$\varepsilon=8/255$）
 | 攻击 | 配置 | 准确率 |
 | --- | --- | --- |
 | 自然样本 | — | 87.3% |
@@ -43,7 +47,7 @@ $ \min_{\theta}\rho(\theta),\quad
 
 #### 三、损失景观观察（PGD 作为"通用一阶攻击"的依据）
 + PGD 损失在少数几步内快速上升并**稳定 plateau**；
-+ $ 10^5 $ 次随机重启得到的局部极大值，**损失值高度集中、无离群点**（尽管极大值点彼此相距很远、夹角约 $ 90^\circ $）；
++$10^5$次随机重启得到的局部极大值，**损失值高度集中、无离群点**（尽管极大值点彼此相距很远、夹角约$90^\circ$）；
 + 对抗训练网络的最大损失**显著低于**标准网络。
 
 #### 四、网络容量实验
@@ -56,10 +60,10 @@ $ \min_{\theta}\rho(\theta),\quad
 
 关键结论：**容量越大，鞍点问题最优值越低、鲁棒性越好**；小容量模型在 PGD-AT 下会坍缩为"预测固定类"；FGSM 训练存在 label leaking，对 PGD 零防御。
 
-#### 五、扰动强度 $ \varepsilon $ 的影响
-+ $ \varepsilon \le $ 训练值时准确率持平或更高；
-+ MNIST 一旦超过训练 $ \varepsilon $，鲁棒性**急剧下降**（阈值滤波器只针对固定 $ \varepsilon $）；CIFAR 衰减较平滑；
-+ MNIST 上 PGD 会**高估 **$ \ell_2 $** 鲁棒性**（学到的阈值滤波器遮蔽梯度），用不依赖梯度的 Decision Boundary Attack 才能暴露其脆弱性。
+#### 五、扰动强度$\varepsilon$的影响
++$\varepsilon \le$训练值时准确率持平或更高；
++ MNIST 一旦超过训练$\varepsilon$，鲁棒性**急剧下降**（阈值滤波器只针对固定$\varepsilon$）；CIFAR 衰减较平滑；
++ MNIST 上 PGD 会**高估 **$\ell_2$** 鲁棒性**（学到的阈值滤波器遮蔽梯度），用不依赖梯度的 Decision Boundary Attack 才能暴露其脆弱性。
 
 #### **总结**：
 PGD-AT 在 MNIST 上把白盒鲁棒准确率做到 89.3%、黑盒 95%+，在 CIFAR-10 上首次做到白盒 45.8%、黑盒 64%，验证了"一阶攻击损失集中 → PGD 是通用一阶对手"和"鲁棒性依赖足够网络容量"两大核心论断。

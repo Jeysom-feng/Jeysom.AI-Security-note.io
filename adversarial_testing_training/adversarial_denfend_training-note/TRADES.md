@@ -2,13 +2,17 @@
 TRADES很大程度缓解了PGD-AT无法权衡自然准确率与鲁棒准确率的缺点，他提出了边界误差（在决策边缘化的样本被极小的扰动干扰导致分类错误）以及自然误差（在干净样本中被误分类）这两个概念；在损失函数中添加了干净样本分类结果与对抗样本分类结果的KL散度（描述干净样本分类结果与对抗样本分类结果，以及β这个超参来平衡模型的干净准确率与鲁棒准确率（模型是看重准确率还是鲁棒性）
 
 #### 核心公式：
-$ \min_f \mathbb{E}_{(x,y)\sim \mathcal{D}}
+
+$$
+
+\min_f \mathbb{E}_{(x,y)\sim \mathcal{D}}
 \left[
 \mathcal{L}_{CE}\big(f(x),y\big)
 +
 \beta\cdot \max_{\|\delta\|_\infty \le \varepsilon} D_{KL}\big(f(x) \parallel f(x+\delta)\big)
 \right]
- $
+
+$$
 
 通过梯度下降更新可训练参数来是这个公式的值下降
 

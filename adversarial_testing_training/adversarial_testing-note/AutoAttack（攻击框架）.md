@@ -83,8 +83,12 @@ def APGD_CE(model,test_dataset):
 
 ### APGD-DLR:
 #### 优化目标：
-$ $\mathcal{L}_{\mathrm{DLR}}(x,y) = -\dfrac{z_{y}(x) - \max\limits_{i \neq y} z_{i}(x)}{z_{\pi_{1}}(x) - z_{\pi_{3}}(x)}
- $
+
+$$
+
+\mathcal{L}_{\mathrm{DLR}}(x,y) = -\dfrac{z_{y}(x) - \max\limits_{i \neq y} z_{i}(x)}{z_{\pi_{1}}(x) - z_{\pi_{3}}(x)}
+
+$$
 
 #### 相比 APGD-CE 的核心改进（解决的问题）
 #### DLR 损失专门针对交叉熵损失的三大固有缺陷设计：
@@ -154,36 +158,39 @@ def APGD_DLR(model,test_dataset):
 
 Xproj更新公式为：
 
-L2范数更新：
+L2范数更新：$\boldsymbol{x}_{\text{proj}} = \boldsymbol{x}_t - \frac{g(\boldsymbol{x}_t)}{\left\| \nabla g(\boldsymbol{x}_t) \right\|_2^2} \cdot \nabla g(\boldsymbol{x}_t)$：
 
-$ \boldsymbol{x}_{\text{proj}} = \boldsymbol{x}_t - \frac{g(\boldsymbol{x}_t)}{\left\| \nabla g(\boldsymbol{x}_t) \right\|_2^2} \cdot \nabla g(\boldsymbol{x}_t)
- $：
+L∞范数更新：$\boldsymbol{x}_{\text{proj}} = \boldsymbol{x}_t - \frac{g(\boldsymbol{x}_t)}{\left\| \nabla g(\boldsymbol{x}_t) \right\|_1} \cdot \operatorname{sign}\left( \nabla g(\boldsymbol{x}_t) \right)
 
-L∞范数更新：
-
-$ \boldsymbol{x}_{\text{proj}} = \boldsymbol{x}_t - \frac{g(\boldsymbol{x}_t)}{\left\| \nabla g(\boldsymbol{x}_t) \right\|_1} \cdot \operatorname{sign}\left( \nabla g(\boldsymbol{x}_t) \right)
- $
+$$
 
 L1范数更新：
 
-$ \boldsymbol{x}_{\text{proj}} = \boldsymbol{x}_t - \frac{g(\boldsymbol{x}_t)}{\left| \nabla g(\boldsymbol{x}_t)_{k^*} \right|} \cdot \boldsymbol{e}_{k^*}
+$$
+
+\boldsymbol{x}_{\text{proj}} = \boldsymbol{x}_t - \frac{g(\boldsymbol{x}_t)}{\left| \nabla g(\boldsymbol{x}_t)_{k^*} \right|} \cdot \boldsymbol{e}_{k^*}
 \quad \text{其中} \quad
 k^* = \arg\max_{i} \left| \nabla g(\boldsymbol{x}_t)_i \right|
- $
+
+$$
 
 更新后与Xt做加权求和得出下一迭代点
 
-$ \boldsymbol{x}_{t+1} = \alpha_t \cdot \boldsymbol{x}_{\text{proj}} + (1 - \alpha_t) \cdot \boldsymbol{x}_t
- $
+$$
 
-在迭代结束后， 原始样本 X0 与当前最优对抗样本Xbest 之间做线性插值，通过二分搜索定位到刚好越过决策边界的最小扰动点  
+\boldsymbol{x}_{t+1} = \alpha_t \cdot \boldsymbol{x}_{\text{proj}} + (1 - \alpha_t) \cdot \boldsymbol{x}_t
 
-$ \boldsymbol{x}^* = \beta^* \cdot \boldsymbol{x}_0 + (1 - \beta^*) \cdot \boldsymbol{x}_{\text{best}}
+$$
+
+在迭代结束后， 原始样本 X0 与当前最优对抗样本Xbest 之间做线性插值，通过二分搜索定位到刚好越过决策边界的最小扰动点
+
+$$
+
+\boldsymbol{x}^* = \beta^* \cdot \boldsymbol{x}_0 + (1 - \beta^*) \cdot \boldsymbol{x}_{\text{best}}
 
 \text{其中} \quad \beta^* = \max\left\{ \beta \in [0,1] \mid g\left( \beta \boldsymbol{x}_0 + (1-\beta) \boldsymbol{x}_{\text{best}} \right) > 0 \right\}
- $
 
-
+$$
 
 #### 基于CIFAR-10数据集的对抗测试：
 ##### 模型结构：

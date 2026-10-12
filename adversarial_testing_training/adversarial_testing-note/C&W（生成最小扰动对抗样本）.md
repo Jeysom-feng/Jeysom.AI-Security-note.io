@@ -2,18 +2,23 @@
 
 ### 原理：
 #### 优化目标：
-$ \min_{\delta}\ \|\delta\|_2^2 + c\cdot f(x+\delta)
+
+$$
+
+\min_{\delta}\ \|\delta\|_2^2 + c\cdot f(x+\delta)
 \quad \text{s.t. } x+\delta\in[\min,\max]
 
- $
+$$
 
-$ f(x')=\max\!\left(\max_{i\neq t} Z(x')_i - Z(x')_t,\ -\kappa\right)
- $
+$$f(x')=\max\!\left(\max_{i\neq t} Z(x')_i - Z(x')_t,\ -\kappa\right)
 
-$ x+\delta=\frac{1}{2}\big(\tanh(w)+1\big)(\max-\min)+\min
+$$
+
+$$x+\delta=\frac{1}{2}\big(\tanh(w)+1\big)(\max-\min)+\min
 \quad\Longrightarrow\quad
 \delta(w)=\frac{1}{2}\big(\tanh(w)+1\big)(\max-\min)+\min-x
- $
+
+$$
 
 δ表示修改像素的量，c是平衡扰动大小与攻击成功率的参数；
 
